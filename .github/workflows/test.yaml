@@ -12,3 +12,11 @@ jobs:
         run: |
           node -v
           npm -v
+  run-windows-commands:
+    runs-on: windows-latest
+    steps:
+      - name: pwd
+        run: Get-Location
+      - name: pwd on bash shell
+        run: pwd
+        shell: bash
