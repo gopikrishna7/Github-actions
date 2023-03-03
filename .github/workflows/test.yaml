@@ -8,15 +8,19 @@ jobs:
     steps:
       - name: echo a string
         run: echo "Hello world"
-      - name: multiline script
+      - name: commands
         run: |
-          node -v
-          npm -v
-  run-windows-commands:
-    runs-on: windows-latest
-    steps:
-      - name: pwd
-        run: Get-Location
-      - name: pwd on bash shell
-        run: pwd
-        shell: bash
+          pwd
+          ls
+      # - name: multiline script
+      #   run: |
+      #     node -v
+      #     npm -v
+  # run-windows-commands:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: pwd
+  #       run: Get-Location
+  #     - name: pwd on bash shell
+  #       run: pwd
+  #       shell: bash
