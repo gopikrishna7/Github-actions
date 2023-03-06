@@ -14,6 +14,8 @@ jobs:
         run: |
           pwd
           ls -a
+          python /src/test.py
+
       # - name: multiline script
       #   run: |
       #     node -v
