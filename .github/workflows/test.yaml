@@ -1,20 +1,34 @@
-name: shell commands
+name: run every minute
 
-on: [push, pull_request]
-
+on:
+  schedule:
+    - cron: "* * * * *"
 jobs:
-  run-shell-commands:
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo a string
-        run: echo "Hello world"
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: commands
-        run: |
-          pwd
-          ls -a
-          python src/test.py
+  hello:
+   runs-on: ubuntu-latest
+   steps:
+     - name: echo
+       run: echo "Hello"
+
+
+
+# name: shell commands
+
+# on: [push]
+
+# jobs:
+#   run-shell-commands:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: echo a string
+#         run: echo "Hello world"
+#       - name: Checkout
+#         uses: actions/checkout@v1
+#       - name: commands
+#         run: |
+#           pwd
+#           ls -a
+#           python src/test.py
 
       # - name: multiline script
       #   run: |
