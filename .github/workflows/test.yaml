@@ -13,7 +13,7 @@ jobs:
       - name: commands
         run: |
           pwd
-          ls
+          ls -a
       # - name: multiline script
       #   run: |
       #     node -v
