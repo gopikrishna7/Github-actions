@@ -1,14 +1,16 @@
 name: run every minute
 
-on:
-  schedule:
-    - cron: "* * * * *"
+on: [push]
 jobs:
   hello:
    runs-on: ubuntu-latest
+   env:
+     Number: 1
    steps:
      - name: echo
-       run: echo "Hello"
+       run: echo "$Number"
+     - name: increse
+       run: echo "Number=$Number+1" >> $GITHUB_ENV
 
 
 
