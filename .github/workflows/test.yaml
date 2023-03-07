@@ -11,6 +11,8 @@ jobs:
        run: echo "$Number"
      - name: increse
        run: echo "Number=$Number+1" >> $GITHUB_ENV
+     - name: echo after increase
+       run: echo "$Number"
 
 
 
