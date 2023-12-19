@@ -27,6 +27,6 @@ jobs:
     - name: SSH into VM and run script
       run: |
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@${{ secrets.VM_HOST }} 'bash -s' <<EOF
-        /Github-actions/src/test.sh --version ${{ github.event.inputs.version }} --key ${{ github.event.inputs.key }}
+        /home/runner/work/Github-actions/Github-actions/src/test.sh --version ${{ github.event.inputs.version }} --key ${{ github.event.inputs.key }}
         EOF
       shell: bash
