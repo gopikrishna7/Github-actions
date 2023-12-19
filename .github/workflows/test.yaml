@@ -23,11 +23,10 @@ jobs:
         mkdir -p ~/.ssh/
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -t rsa ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
 
     - name: SSH into VM and run script
       run: |
-        ssh -i ~/.ssh/id_rsa user@${{ secrets.VM_HOST }} 'bash -s' <<EOF
-        /path/to/your/script.sh --version ${{ github.event.inputs.version }} --key ${{ github.event.inputs.key }}
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@${{ secrets.VM_HOST }} 'bash -s' <<EOF
+        /Github-actions/src/script.sh --version ${{ github.event.inputs.version }} --key ${{ github.event.inputs.key }}
         EOF
       shell: bash
