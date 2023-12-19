@@ -1,50 +1,33 @@
-name: run every minute
+name: SSH into VM and Run Script
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version parameter'
+        required: true
+      key:
+        description: 'Key parameter'
+        required: true
+
 jobs:
-  hello:
-   runs-on: ubuntu-latest
-   env:
-     Number: 1
-   steps:
-     - name: echo
-       run: echo "$Number"
-     - name: increse
-       run: echo "Number=$Number+1" >> $GITHUB_ENV
-     - name: echo after increase
-       run: echo "$Number"
-     - name: just
-       run: echo test
+  deploy:
+    runs-on: ubuntu-latest
 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
 
-# name: shell commands
-
-# on: [push]
-
-# jobs:
-#   run-shell-commands:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: echo a string
-#         run: echo "Hello world"
-#       - name: Checkout
-#         uses: actions/checkout@v1
-#       - name: commands
-#         run: |
-#           pwd
-#           ls -a
-#           python src/test.py
-
-      # - name: multiline script
-      #   run: |
-      #     node -v
-      #     npm -v
-  # run-windows-commands:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: pwd
-  #       run: Get-Location
-  #     - name: pwd on bash shell
-  #       run: pwd
-  #       shell: bash
+    - name: SSH into VM and run script
+      run: |
+        ssh -i ~/.ssh/id_rsa user@${{ secrets.VM_HOST }} 'bash -s' <<EOF
+        /path/to/your/script.sh --version ${{ github.event.inputs.version }} --key ${{ github.event.inputs.key }}
+        EOF
+      shell: bash
